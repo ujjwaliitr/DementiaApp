@@ -1,73 +1,49 @@
-/* While this template provides a good starting point for using Wear Compose, you can always
- * take a look at https://github.com/android/wear-os-samples/tree/main/ComposeStarter and
- * https://github.com/android/wear-os-samples/tree/main/ComposeAdvanced to find the most up to date
- * changes to the libraries and their usages.
- */
-
 package com.example.dementiaapp.presentation
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.TimeText
+import android.widget.Button
 import com.example.dementiaapp.R
-import com.example.dementiaapp.presentation.theme.DementiaAppTheme
 
-class MainActivity : ComponentActivity() {
+class MainActivity : Activity() {
+
+    private lateinit var callButton: Button
+    private lateinit var setReminderButton: Button
+    private lateinit var getReminderButton: Button
+    private lateinit var aboutMeButton: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
-
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-        setTheme(android.R.style.Theme_DeviceDefault)
+        callButton = findViewById(R.id.call_button)
+        setReminderButton = findViewById(R.id.set_reminder_button)
+        getReminderButton = findViewById(R.id.get_reminder_button)
+        aboutMeButton = findViewById(R.id.about_me_button)
 
-        setContent {
-            WearApp("Android")
+        callButton.setOnClickListener {
+            callCaregiver()
+        }
+
+        setReminderButton.setOnClickListener {
+            startActivity(Intent(this@MainActivity, SetReminderActivity::class.java))
+        }
+
+        getReminderButton.setOnClickListener {
+            startActivity(Intent(this@MainActivity, GetReminderActivity::class.java))
+        }
+
+        aboutMeButton.setOnClickListener {
+            startActivity(Intent(this@MainActivity, AboutMeActivity::class.java))
         }
     }
-}
 
-@Composable
-fun WearApp(greetingName: String) {
-    DementiaAppTheme {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colors.background),
-            contentAlignment = Alignment.Center
-        ) {
-            TimeText()
-            Greeting(greetingName = greetingName)
-        }
+    private fun callCaregiver() {
+        val primaryCaregiverNumber = "tel:1234567890"
+        val callIntent = Intent(Intent.ACTION_CALL)
+        callIntent.data = Uri.parse(primaryCaregiverNumber)
+        startActivity(callIntent)
     }
-}
-
-@Composable
-fun Greeting(greetingName: String) {
-    Text(
-        modifier = Modifier.fillMaxWidth(),
-        textAlign = TextAlign.Center,
-        color = MaterialTheme.colors.primary,
-        text = stringResource(R.string.hello_world, greetingName)
-    )
-}
-
-@Preview(device = Devices.WEAR_OS_SMALL_ROUND, showSystemUi = true)
-@Composable
-fun DefaultPreview() {
-    WearApp("Preview Android")
 }
