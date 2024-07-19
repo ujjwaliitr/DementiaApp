@@ -14,6 +14,6 @@ class AboutMeActivity : Activity() {
         setContentView(R.layout.activity_about_me)
 
         aboutMeText = findViewById(R.id.about_me_text)
-        aboutMeText.text = "My name is Ghajni." + "My home is London"
+        aboutMeText.text = "Hi I am John.I sometime get lost.Please contact my son Paul:+44123456789,125-Church Street London"
     }
 }

@@ -2,16 +2,14 @@ package com.example.dementiaapp.presentation
 
 import android.app.Activity
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.AdapterView
 import android.widget.Toast
 import com.example.dementiaapp.R
 
 class GetReminderActivity : Activity() {
 
     private lateinit var remindersListView: ListView
-    private lateinit var adapter: ArrayAdapter<String>
+    private lateinit var adapter: ReminderAdapter
     private lateinit var reminders: MutableList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,12 +18,10 @@ class GetReminderActivity : Activity() {
 
         remindersListView = findViewById(R.id.reminders_list)
         reminders = getReminders().toMutableList()
-        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, reminders)
-        remindersListView.adapter = adapter
-
-        remindersListView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+        adapter = ReminderAdapter(this, reminders) { position ->
             deleteReminder(position)
         }
+        remindersListView.adapter = adapter
     }
 
     override fun onResume() {

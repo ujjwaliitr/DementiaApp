@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -14,10 +14,10 @@ import com.example.dementiaapp.R
 
 class MainActivity : Activity() {
 
-    private lateinit var callButton: Button
-    private lateinit var setReminderButton: Button
-    private lateinit var getReminderButton: Button
-    private lateinit var aboutMeButton: Button
+    private lateinit var callButton: ImageButton
+    private lateinit var setReminderButton: ImageButton
+    private lateinit var getReminderButton: ImageButton
+    private lateinit var aboutMeButton: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

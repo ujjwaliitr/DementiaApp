@@ -7,7 +7,7 @@
     <string name="hello_world">From Square world,\nHello, %1$s!</string>
     <string name="tile_label">Example tile</string>
     <string name="complication_label">Example complication</string>
-    <string name="time_hh_mm">Time (HH:mm)</string>
+    <string name="time_hh_mm">Time (HH:mm:ss)</string>
     <string name="reminder_message">Reminder Message</string>
     <string name="set_reminder">Set Reminder</string>
 </resources>
