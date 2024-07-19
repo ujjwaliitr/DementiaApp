@@ -5,6 +5,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import android.Manifest
+import android.content.pm.PackageManager
 import com.example.dementiaapp.R
 
 class MainActivity : Activity() {
@@ -41,9 +46,27 @@ class MainActivity : Activity() {
     }
 
     private fun callCaregiver() {
-        val primaryCaregiverNumber = "tel:1234567890"
-        val callIntent = Intent(Intent.ACTION_CALL)
-        callIntent.data = Uri.parse(primaryCaregiverNumber)
-        startActivity(callIntent)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CALL_PHONE), 1)
+        } else {
+            val primaryCaregiverNumber = "tel:1234567890"
+            val callIntent = Intent(Intent.ACTION_CALL)
+            callIntent.data = Uri.parse(primaryCaregiverNumber)
+            startActivity(callIntent)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            1 -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    callCaregiver()
+                } else {
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                }
+                return
+            }
+        }
     }
 }
